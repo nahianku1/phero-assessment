@@ -14,7 +14,6 @@ authRouter.post(
 
 authRouter.post(
   "/refresh-token",
-  validateRequest(AuthValidation.refreshTokenValidationSchema),
   AuthControllers.refreshToken
 );
 

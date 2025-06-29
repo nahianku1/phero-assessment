@@ -11,6 +11,10 @@ const loginUser = catchAsync(async (req, res) => {
     secure: config.node_env === "production",
     httpOnly: true,
   });
+  res.cookie("accessToken", accessToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+  });
 
   sendResponse(res, {
     success: true,
@@ -24,13 +28,18 @@ const loginUser = catchAsync(async (req, res) => {
 
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
-  const result = await AuthServices.refreshToken(refreshToken);
+  const { accessToken } = await AuthServices.refreshToken(refreshToken);
 
+  res.cookie("accessToken", accessToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+  });
+  
   sendResponse(res, {
     success: true,
     statusCode: 200,
     message: "Access token is retrieved successfully!",
-    data: result,
+    data: accessToken,
   });
 });
 

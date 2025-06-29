@@ -6,6 +6,18 @@ const createEventIntoDB = async (payload: TEvent) => {
   return result;
 };
 
+const getAllEventsFromDB = async () => {
+  const events = await EventModel.find();
+  return events;
+};
+
+const getEventsByUserEmail = async (email: string) => {
+  const events = await EventModel.find({ userEmail: email });
+  return events;
+};
+
 export const EventServices = {
   createEventIntoDB,
+  getAllEventsFromDB,
+  getEventsByUserEmail,
 };

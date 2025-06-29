@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { connect } from "mongoose";
 import app from "./app";
 import config from "./app/config/config";

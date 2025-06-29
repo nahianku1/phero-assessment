@@ -18,7 +18,7 @@ export const verifyToken = (token: string, secret: string) => {
   try {
     return jwt.verify(token, secret);
   } catch (error) {
-    throw new AppError(httpStatus.UNAUTHORIZED, `You are unauthorized!`);
+    throw new AppError(httpStatus.UNAUTHORIZED, `Token not verified!`);
   }
 };
 
