@@ -34,7 +34,7 @@ const refreshToken = catchAsync(async (req, res) => {
     secure: config.node_env === "production",
     httpOnly: true,
   });
-  
+
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -43,7 +43,21 @@ const refreshToken = catchAsync(async (req, res) => {
   });
 });
 
+const validateToken = catchAsync(async (req, res) => {
+  const { accessToken } = req.cookies;
+ 
+  const result = await AuthServices.validateToken(accessToken);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Access token is validated successfully!",
+    data: result,
+  });
+});
+
 export const AuthControllers = {
   loginUser,
   refreshToken,
+  validateToken,
 };

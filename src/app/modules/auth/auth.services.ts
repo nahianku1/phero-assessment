@@ -78,7 +78,29 @@ const refreshToken = async (token: string) => {
   return { accessToken };
 };
 
+const validateToken = async (token: string) => {
+
+  const verifiedToken = verifyToken(
+    token,
+    config.jwt_access_secret as string
+  ) as JwtPayload;
+
+  console.log(verifiedToken, 88);
+
+  const { email } = verifiedToken;
+
+  // checking if the user is exist
+  const user = await UserModel.findOne({ email: email });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
+  }
+
+  return verifiedToken;
+};
+
 export const AuthServices = {
   loginUser,
   refreshToken,
+  validateToken,
 };
