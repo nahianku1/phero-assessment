@@ -35,6 +35,5 @@ export const createUserValidation = z.object({
     .url({ message: "Invalid Photo URL!" }),
 });
 
-// export const updateUserValidation = createUserValidation.partial();
 
 export const ZodValidations = { createUserValidation };

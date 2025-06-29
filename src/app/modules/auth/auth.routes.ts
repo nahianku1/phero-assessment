@@ -4,15 +4,15 @@ import { AuthValidation } from "./auth.validation";
 import { AuthControllers } from "./auth.controllers";
 
 
-const router = express.Router();
+export const authRouter = express.Router();
 
-router.post(
+authRouter.post(
   "/login",
   validateRequest(AuthValidation.loginValidationSchema),
   AuthControllers.loginUser
 );
 
-router.post(
+authRouter.post(
   "/refresh-token",
   validateRequest(AuthValidation.refreshTokenValidationSchema),
   AuthControllers.refreshToken
@@ -20,4 +20,3 @@ router.post(
 
 
 
-export const authRouter = router;
