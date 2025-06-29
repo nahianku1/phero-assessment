@@ -1,0 +1,17 @@
+import express, { Application } from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import { globalErrorhandler } from "./app/middlewares/globalErrorHandler";
+import { notFound } from "./app/middlewares/notFound";
+import cookieParser from "cookie-parser";
+
+const app: Application = express();
+app.use(cookieParser());
+app.use(cors({ origin: "*", credentials: true }));
+app.use(express.json());
+dotenv.config();
+
+
+app.use(notFound);
+app.use(globalErrorhandler);
+export default app;
