@@ -15,7 +15,9 @@ const createEvent = catchAsync(async (req, res) => {
 });
 
 const getAllEvents = catchAsync(async (req, res) => {
-  const result = await EventServices.getAllEventsFromDB();
+  const result = await EventServices.getAllEventsFromDB(
+    req.query as Record<string, string>
+  );
   sendResponse(res, {
     success: true,
     statusCode: 200,

@@ -85,8 +85,6 @@ const validateToken = async (token: string) => {
     config.jwt_access_secret as string
   ) as JwtPayload;
 
-  console.log(verifiedToken, 88);
-
   const { email } = verifiedToken;
 
   // checking if the user is exist
@@ -98,6 +96,8 @@ const validateToken = async (token: string) => {
 
   return verifiedToken;
 };
+
+
 
 export const AuthServices = {
   loginUser,

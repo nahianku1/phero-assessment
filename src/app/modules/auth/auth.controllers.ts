@@ -45,7 +45,7 @@ const refreshToken = catchAsync(async (req, res) => {
 
 const validateToken = catchAsync(async (req, res) => {
   const { accessToken } = req.cookies;
- 
+
   const result = await AuthServices.validateToken(accessToken);
 
   sendResponse(res, {
@@ -56,8 +56,20 @@ const validateToken = catchAsync(async (req, res) => {
   });
 });
 
+const expireTokens = catchAsync(async (req, res) => {
+  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken");
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Tokens are expired successfully!",
+    data: null,
+  });
+});
+
 export const AuthControllers = {
   loginUser,
   refreshToken,
   validateToken,
+  expireTokens,
 };

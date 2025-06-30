@@ -13,3 +13,4 @@ authRouter.post(
 
 authRouter.post("/validate-token", AuthControllers.validateToken);
 authRouter.post("/refresh-token", AuthControllers.refreshToken);
+authRouter.post("/expire-token", AuthControllers.expireTokens);
