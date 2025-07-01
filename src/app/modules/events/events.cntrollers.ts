@@ -37,8 +37,46 @@ const getAllEventsByUserEmail = catchAsync(async (req, res) => {
   });
 });
 
+const joinEvent = catchAsync(async (req, res) => {
+  const { email } = req.user;
+  const { eventId } = req.params;
+  const result = await EventServices.joinEventIntoEventDB(eventId, email);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Joined event successfully!",
+    data: result,
+  });
+});
+
+const updateEvent = catchAsync(async (req, res) => {
+  const { eventId } = req.params;
+  const updatedData = req.body;
+  const result = await EventServices.updateEventIntoDB(eventId, updatedData);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Event updated successfully!",
+    data: result,
+  });
+});
+
+const deleteEvent = catchAsync(async (req, res) => {
+  const { eventId } = req.params;
+  const result = await EventServices.deleteEventFromDB(eventId);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Event deleted successfully!",
+    data: result,
+  });
+});
+
 export const EventControllers = {
   createEvent,
   getAllEvents,
   getAllEventsByUserEmail,
+  joinEvent,
+  updateEvent,
+  deleteEvent,
 };

@@ -49,6 +49,11 @@ const EventSchema = new Schema<TEvent>(
       required: [true, "User Email is required"],
       trim: true,
     },
+    joins: {
+      type: [String], // Updated to array of strings
+      required: true, // Kept required, but consider if empty array is valid
+      default: [], // Default to empty array
+    },
   },
   {
     timestamps: true,

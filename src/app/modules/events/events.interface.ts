@@ -6,4 +6,5 @@ export default interface TEvent {
   description: string;
   attendeeCount: number;
   userEmail: string;
+  joins: string[];
 }

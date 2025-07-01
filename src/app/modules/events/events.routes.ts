@@ -16,3 +16,18 @@ eventRouter.post(
 eventRouter.get("/all-events", auth(), EventControllers.getAllEvents);
 
 eventRouter.get("/my-events", auth(), EventControllers.getAllEventsByUserEmail);
+
+eventRouter.post("/join/:eventId", auth(), EventControllers.joinEvent);
+
+eventRouter.put(
+  "/update-event/:eventId",
+  auth(),
+  validateRequest(EventValidations.updateEventSchema),
+  EventControllers.updateEvent
+);
+
+eventRouter.delete(
+  "/delete-event/:eventId",
+  auth(),
+  EventControllers.deleteEvent
+);
