@@ -10,10 +10,7 @@ const app: Application = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://event-manager-phero.netlify.app/",
-    ], // Replace with your React app's URL
+    origin: "https://event-manager-phero.netlify.app/", // Replace with your React app's URL
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
