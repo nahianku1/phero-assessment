@@ -1,20 +1,22 @@
 import catchAsync from "../../utils/catchAsync";
 import { AuthServices } from "./auth.services";
 import { sendResponse } from "../../utils/sendResponse";
+import config from "../../config/config";
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
   const { refreshToken, accessToken } = result;
 
-  res.cookie("refreshToken", refreshToken, {
-    secure: false,
-    httpOnly: true,
-    sameSite: "none", // Adjust as needed
-  });
   res.cookie("accessToken", accessToken, {
-    secure: false,
+    secure: config.node_env === "production",
     httpOnly: true,
-    sameSite: "none",
+    sameSite: config.node_env === "production" ? "none" : "lax",
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+    sameSite: config.node_env === "production" ? "none" : "lax",
   });
 
   sendResponse(res, {
@@ -32,9 +34,9 @@ const refreshToken = catchAsync(async (req, res) => {
   const { accessToken } = await AuthServices.refreshToken(refreshToken);
 
   res.cookie("accessToken", accessToken, {
-    secure: false,
+    secure: config.node_env === "production",
     httpOnly: true,
-    sameSite: "none",
+    sameSite: config.node_env === "production" ? "none" : "lax",
   });
 
   sendResponse(res, {
@@ -47,7 +49,8 @@ const refreshToken = catchAsync(async (req, res) => {
 
 const validateToken = catchAsync(async (req, res) => {
   const { accessToken } = req.cookies;
-  console.log({ accessToken }, 47);
+
+  
 
   const result = await AuthServices.validateToken(accessToken);
 

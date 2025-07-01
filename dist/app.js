@@ -13,7 +13,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: "https://event-manager-phero.netlify.app",
+    origin: "http://localhost:5173",
     credentials: true,
     methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE", "PATCH"],
 }));

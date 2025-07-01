@@ -16,18 +16,19 @@ exports.AuthControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const auth_services_1 = require("./auth.services");
 const sendResponse_1 = require("../../utils/sendResponse");
+const config_1 = __importDefault(require("../../config/config"));
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_services_1.AuthServices.loginUser(req.body);
     const { refreshToken, accessToken } = result;
-    res.cookie("refreshToken", refreshToken, {
-        secure: false,
-        httpOnly: true,
-        sameSite: "none", // Adjust as needed
-    });
     res.cookie("accessToken", accessToken, {
-        secure: false,
+        secure: config_1.default.node_env === "production",
         httpOnly: true,
-        sameSite: "none",
+        sameSite: config_1.default.node_env === "production" ? "none" : "lax",
+    });
+    res.cookie("refreshToken", refreshToken, {
+        secure: config_1.default.node_env === "production",
+        httpOnly: true,
+        sameSite: config_1.default.node_env === "production" ? "none" : "lax",
     });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
@@ -42,9 +43,9 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     const { refreshToken } = req.cookies;
     const { accessToken } = yield auth_services_1.AuthServices.refreshToken(refreshToken);
     res.cookie("accessToken", accessToken, {
-        secure: false,
+        secure: config_1.default.node_env === "production",
         httpOnly: true,
-        sameSite: "none",
+        sameSite: config_1.default.node_env === "production" ? "none" : "lax",
     });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
@@ -55,7 +56,6 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 const validateToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accessToken } = req.cookies;
-    console.log({ accessToken }, 47);
     const result = yield auth_services_1.AuthServices.validateToken(accessToken);
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
