@@ -13,9 +13,9 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: "https://event-manager-phero.netlify.app/", // Replace with your React app's URL
+    origin: "https://event-manager-phero.netlify.app/",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE", "PATCH"],
 }));
 app.use(express_1.default.json());
 dotenv_1.default.config();
