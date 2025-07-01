@@ -65,8 +65,11 @@ const validateToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const expireTokens = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.clearCookie("refreshToken");
     res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    ["accessToken", "refreshToken"].forEach(cookie => {
+        res.clearCookie(cookie);
+    });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
         statusCode: 200,

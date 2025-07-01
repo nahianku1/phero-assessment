@@ -93,10 +93,8 @@ const validateToken = async (token: string) => {
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "This user is not found !");
   }
-
   return verifiedToken;
 };
-
 
 
 export const AuthServices = {

@@ -63,8 +63,11 @@ const validateToken = catchAsync(async (req, res) => {
 });
 
 const expireTokens = catchAsync(async (req, res) => {
-  res.clearCookie("refreshToken");
   res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  ["accessToken", "refreshToken"].forEach(cookie => {
+    res.clearCookie(cookie);
+  });
 
   sendResponse(res, {
     success: true,
