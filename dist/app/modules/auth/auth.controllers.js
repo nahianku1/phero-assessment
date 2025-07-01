@@ -16,16 +16,15 @@ exports.AuthControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const auth_services_1 = require("./auth.services");
 const sendResponse_1 = require("../../utils/sendResponse");
-const config_1 = __importDefault(require("../../config/config"));
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_services_1.AuthServices.loginUser(req.body);
     const { refreshToken, accessToken } = result;
     res.cookie("refreshToken", refreshToken, {
-        secure: config_1.default.node_env === "production",
+        secure: false,
         httpOnly: true,
     });
     res.cookie("accessToken", accessToken, {
-        secure: config_1.default.node_env === "production",
+        secure: false,
         httpOnly: true,
     });
     (0, sendResponse_1.sendResponse)(res, {
@@ -41,7 +40,7 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     const { refreshToken } = req.cookies;
     const { accessToken } = yield auth_services_1.AuthServices.refreshToken(refreshToken);
     res.cookie("accessToken", accessToken, {
-        secure: config_1.default.node_env === "production",
+        secure: false,
         httpOnly: true,
     });
     (0, sendResponse_1.sendResponse)(res, {
