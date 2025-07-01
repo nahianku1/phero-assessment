@@ -65,6 +65,7 @@ const validateToken = catchAsync(async (req, res) => {
 const expireTokens = catchAsync(async (req, res) => {
   res.clearCookie("refreshToken");
   res.clearCookie("accessToken");
+
   sendResponse(res, {
     success: true,
     statusCode: 200,
