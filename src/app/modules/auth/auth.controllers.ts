@@ -62,11 +62,14 @@ const validateToken = catchAsync(async (req, res) => {
 
 const expireTokens = catchAsync(async (req, res) => {
   res.clearCookie("accessToken", {
+    path: "/",
     secure: config.node_env === "production",
     httpOnly: true,
     sameSite: config.node_env === "production" ? "none" : "lax",
   });
+
   res.clearCookie("refreshToken", {
+    path: "/",
     secure: config.node_env === "production",
     httpOnly: true,
     sameSite: config.node_env === "production" ? "none" : "lax",
