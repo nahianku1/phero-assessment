@@ -65,10 +65,15 @@ const validateToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const expireTokens = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
-    ["accessToken", "refreshToken"].forEach(cookie => {
-        res.clearCookie(cookie);
+    res.clearCookie("accessToken", {
+        secure: config_1.default.node_env === "production",
+        httpOnly: true,
+        sameSite: config_1.default.node_env === "production" ? "none" : "lax",
+    });
+    res.clearCookie("refreshToken", {
+        secure: config_1.default.node_env === "production",
+        httpOnly: true,
+        sameSite: config_1.default.node_env === "production" ? "none" : "lax",
     });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,

@@ -50,8 +50,6 @@ const refreshToken = catchAsync(async (req, res) => {
 const validateToken = catchAsync(async (req, res) => {
   const { accessToken } = req.cookies;
 
-  
-
   const result = await AuthServices.validateToken(accessToken);
 
   sendResponse(res, {
@@ -63,10 +61,15 @@ const validateToken = catchAsync(async (req, res) => {
 });
 
 const expireTokens = catchAsync(async (req, res) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
-  ["accessToken", "refreshToken"].forEach(cookie => {
-    res.clearCookie(cookie);
+  res.clearCookie("accessToken", {
+    secure: config.node_env === "production",
+    httpOnly: true,
+    sameSite: config.node_env === "production" ? "none" : "lax",
+  });
+  res.clearCookie("refreshToken", {
+    secure: config.node_env === "production",
+    httpOnly: true,
+    sameSite: config.node_env === "production" ? "none" : "lax",
   });
 
   sendResponse(res, {
