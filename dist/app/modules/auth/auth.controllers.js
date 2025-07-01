@@ -22,10 +22,12 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
+        sameSite: "none", // Adjust as needed
     });
     res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
+        sameSite: "none",
     });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
@@ -42,6 +44,7 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
+        sameSite: "none",
     });
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
@@ -52,6 +55,7 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 const validateToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accessToken } = req.cookies;
+    console.log({ accessToken }, 47);
     const result = yield auth_services_1.AuthServices.validateToken(accessToken);
     (0, sendResponse_1.sendResponse)(res, {
         success: true,

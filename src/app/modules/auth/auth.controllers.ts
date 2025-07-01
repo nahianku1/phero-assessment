@@ -9,10 +9,12 @@ const loginUser = catchAsync(async (req, res) => {
   res.cookie("refreshToken", refreshToken, {
     secure: false,
     httpOnly: true,
+    sameSite: "none", // Adjust as needed
   });
   res.cookie("accessToken", accessToken, {
     secure: false,
     httpOnly: true,
+    sameSite: "none",
   });
 
   sendResponse(res, {
@@ -32,6 +34,7 @@ const refreshToken = catchAsync(async (req, res) => {
   res.cookie("accessToken", accessToken, {
     secure: false,
     httpOnly: true,
+    sameSite: "none",
   });
 
   sendResponse(res, {
@@ -44,6 +47,7 @@ const refreshToken = catchAsync(async (req, res) => {
 
 const validateToken = catchAsync(async (req, res) => {
   const { accessToken } = req.cookies;
+  console.log({ accessToken }, 47);
 
   const result = await AuthServices.validateToken(accessToken);
 
