@@ -21,6 +21,8 @@ const createEventIntoDB = async (payload: TEvent) => {
 const getAllEventsFromDB = async (initialQuery: Record<string, string>) => {
   const { search, dateFilter, specificDate } = initialQuery;
   const now = new Date().toISOString();
+  console.log({search, dateFilter, specificDate,now});
+  
 
   let finalQuery: Record<string, unknown> = {};
   if (search) finalQuery.eventTitle = { $regex: search, $options: "i" };
